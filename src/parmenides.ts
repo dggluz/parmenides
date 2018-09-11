@@ -13,5 +13,6 @@ export * from './never';
 export * from './nil';
 export * from './num';
 export * from './obj';
+export * from './reg-exp';
 export * from './str';
 export * from './undef';
