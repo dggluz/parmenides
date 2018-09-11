@@ -1,1 +1,1 @@
-export const anything = <T = any>(x: T) => x
+export const anything = <T = any>(x: T) => x;
