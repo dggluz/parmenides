@@ -3,6 +3,7 @@ export * from './errors/parmenides-simple-error';
 
 export * from './anything';
 export * from './bool';
+export * from './nil';
 export * from './num';
 export * from './obj';
 export * from './str';
