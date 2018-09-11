@@ -1,18 +1,18 @@
-import { never } from '../src/parmenides';
+import { never, ParmenidesNeverError } from '../src/parmenides';
 
 describe('`never` contract', () => {
-	it('`never(x)` throws TypeError everytime it\'s called', () => {
-		expect(() => never(9 as never)).toThrowError(TypeError);
-		expect(() => never({} as never)).toThrowError(TypeError);
-		expect(() => never('foo' as never)).toThrowError(TypeError);
-		expect(() => never(undefined as never)).toThrowError(TypeError);
-		expect(() => never(false as never)).toThrowError(TypeError);
-		expect(() => never(true as never)).toThrowError(TypeError);
-		expect(() => never([1, 2, 3, 4] as never)).toThrowError(TypeError);
+	it('`never(x)` throws ParmenidesNeverError everytime it\'s called', () => {
+		expect(() => never(9 as never)).toThrowError(ParmenidesNeverError);
+		expect(() => never({} as never)).toThrowError(ParmenidesNeverError);
+		expect(() => never('foo' as never)).toThrowError(ParmenidesNeverError);
+		expect(() => never(undefined as never)).toThrowError(ParmenidesNeverError);
+		expect(() => never(false as never)).toThrowError(ParmenidesNeverError);
+		expect(() => never(true as never)).toThrowError(ParmenidesNeverError);
+		expect(() => never([1, 2, 3, 4] as never)).toThrowError(ParmenidesNeverError);
 		expect(() => never({
 			foo: 'foo',
 			bar: 10
-		} as never)).toThrowError(TypeError);
-		expect(() => never(null as never)).toThrowError(TypeError);
+		} as never)).toThrowError(ParmenidesNeverError);
+		expect(() => never(null as never)).toThrowError(ParmenidesNeverError);
 	});
 });
