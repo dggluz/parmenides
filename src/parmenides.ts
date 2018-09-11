@@ -17,6 +17,7 @@ export * from './nil';
 export * from './num';
 export * from './obj';
 export * from './one-of';
+export * from './optional';
 export * from './reg-exp';
 export * from './str';
 export * from './undef';
