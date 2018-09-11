@@ -1,4 +1,4 @@
-import { obj } from '../src/parmenides';
+import { obj, ParmenidesSimpleError } from '../src/parmenides';
 
 describe('`obj` contract', () => {
 	it('`obj(x)` returns `x` when it is a object', () => {
@@ -8,10 +8,10 @@ describe('`obj` contract', () => {
 		expect(obj(obj2)).toBe(obj2);
 	});
 
-	it('`obj(x)` throws TypeError if `x` is not a object', () => {
-		expect(() => obj(9 as any)).toThrowError(TypeError);
-		expect(() => obj('foo' as any)).toThrowError(TypeError);
-		expect(() => obj(false as any)).toThrowError(TypeError);
-		expect(() => obj(undefined as any)).toThrowError(TypeError);
+	it('`obj(x)` throws ParmenidesSimpleError if `x` is not a object', () => {
+		expect(() => obj(9 as any)).toThrowError(ParmenidesSimpleError);
+		expect(() => obj('foo' as any)).toThrowError(ParmenidesSimpleError);
+		expect(() => obj(false as any)).toThrowError(ParmenidesSimpleError);
+		expect(() => obj(undefined as any)).toThrowError(ParmenidesSimpleError);
 	});
 });
