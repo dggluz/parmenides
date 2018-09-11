@@ -1,0 +1,12 @@
+{
+    "extends": "dtslint/dtslint.json",
+    "rules": {
+      "no-useless-files": false,
+      "file-name-casing": false,
+      "max-line-length": false,
+      "strict-export-declare-modifiers": false,
+      "no-unnecessary-generics": false,
+      "eofline": false,
+      "only-arrow-functions": false
+	}
+}
