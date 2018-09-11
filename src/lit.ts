@@ -1,4 +1,4 @@
-import { ParmenidesSimpleError } from './errors/parmenides-simple-error';
+import { ParmenidesSimpleError } from './errors/parmenides-simple.error';
 
 export type BasicType = string | number | boolean;
 

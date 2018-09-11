@@ -1,4 +1,4 @@
-import { ParmenidesError } from './parmenides-error';
+import { ParmenidesError } from './parmenides.error';
 
 export type Constructor <T> = {
 	new(...args: any[]): T;

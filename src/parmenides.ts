@@ -1,7 +1,7 @@
-export * from './errors/parmenides-error';
-export * from './errors/parmenides-instance-of-error';
-export * from './errors/parmenides-never-error';
-export * from './errors/parmenides-simple-error';
+export * from './errors/parmenides.error';
+export * from './errors/parmenides-instance-of.error';
+export * from './errors/parmenides-never.error';
+export * from './errors/parmenides-simple.error';
 
 export * from './anything';
 export * from './arr';

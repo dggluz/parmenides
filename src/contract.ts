@@ -1,4 +1,4 @@
-import { ParmenidesSimpleError } from './errors/parmenides-simple-error';
+import { ParmenidesSimpleError } from './errors/parmenides-simple.error';
 
 export type Contract <T> = (x: T) => T;
 type ContractType = 'string' | 'boolean' | 'object' | 'number' | 'undefined';

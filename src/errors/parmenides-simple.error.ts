@@ -1,4 +1,4 @@
-import { ParmenidesError } from './parmenides-error';
+import { ParmenidesError } from './parmenides.error';
 
 export class ParmenidesSimpleError extends ParmenidesError {
 	constructor (public expectedType: string, public actualValue: any) {
