@@ -9,6 +9,7 @@ export * from './bool';
 export * from './contract';
 export * from './date';
 export * from './instance-of';
+export * from './lit';
 export * from './never';
 export * from './nil';
 export * from './num';
