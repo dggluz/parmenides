@@ -3,6 +3,7 @@ export * from './errors/parmenides-instance-of.error';
 export * from './errors/parmenides-never.error';
 export * from './errors/parmenides-one-of-error';
 export * from './errors/parmenides-simple.error';
+export * from './errors/parmenides-union.error';
 
 export * from './anything';
 export * from './arr';
@@ -19,3 +20,4 @@ export * from './one-of';
 export * from './reg-exp';
 export * from './str';
 export * from './undef';
+export * from './union';
