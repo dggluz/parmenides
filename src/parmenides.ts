@@ -7,6 +7,7 @@ export * from './anything';
 export * from './arr';
 export * from './bool';
 export * from './contract';
+export * from './date';
 export * from './instance-of';
 export * from './never';
 export * from './nil';
