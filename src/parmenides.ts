@@ -14,6 +14,7 @@ export * from './instance-of';
 export * from './lit';
 export * from './never';
 export * from './nil';
+export * from './nullable';
 export * from './num';
 export * from './obj';
 export * from './one-of';
