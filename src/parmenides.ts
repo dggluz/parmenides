@@ -1,4 +1,5 @@
 export * from './errors/parmenides.error';
+export * from './errors/parmenides-arr-of.error';
 export * from './errors/parmenides-instance-of.error';
 export * from './errors/parmenides-never.error';
 export * from './errors/parmenides-one-of-error';
@@ -7,6 +8,7 @@ export * from './errors/parmenides-union.error';
 
 export * from './anything';
 export * from './arr';
+export * from './arr-of';
 export * from './bool';
 export * from './contract';
 export * from './date';
