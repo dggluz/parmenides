@@ -1,6 +1,5 @@
 import { arrOf, str, num, ParmenidesError } from '../src/parmenides';
 
-// TODO: add tests along with objOf
 describe('`arrOf` contract builder', () => {
 	it('`arrOf(<string>)(x)` returns `x` when it is `x` an array of strings', () => {
 		const arrOfStringsContract = arrOf(str);
@@ -51,53 +50,4 @@ describe('`arrOf` contract builder', () => {
 			['1', '2', '3', '4', '5']
 		] as any)).toThrowError('Invalid element arr[3][2]:');
 	});
-	
-	// it('`arrOf(<any>)(x)` throws a readable error 1', () => {
-	// 	const arrOfObjOf = arrOf(objOf({
-	// 		foo: str,
-	// 		bar: num
-	// 	}));
-	// 	expect(() => arrOfObjOf([{
-	// 		foo: 'foo',
-	// 		bar: 3
-	// 	}, {
-	// 		foo: 'foo',
-	// 		bar: 3
-	// 	}, {
-	// 		foo: 'foo',
-	// 		bar: 3
-	// 	}, {
-	// 		foo: 'foo',
-	// 		bar: '3'
-	// 	}, {
-	// 		foo: 'foo',
-	// 		bar: 3
-	// 	}, {
-	// 		foo: 'foo',
-	// 		bar: 3
-	// 	}] as any)).toThrowError(
-	// 		'ParmenidesError'
-	// 	);
-	// });
-
-		
-	// it('`arrOf(<any>)(x)` throws a readable error 2', () => {
-	// 	const objOfArrOf = objOf({
-	// 		foo: arrOf(str),
-	// 		bar: num
-	// 	});
-	// 	expect(() => objOfArrOf({
-	// 		foo: ['one', 2, 'three'],
-	// 		bar: 3
-	// 	} as any)).toThrowError(
-	// 		'ParmenidesError'
-	// 	);
-	// });
-
-	// it('`arrOf(<any>)(x)` throws a readable error', () => {
-	//     const arrOfStringsContract = arrOf(str);
-	//     expect(() => arrOfStringsContract(['1', '2', 3, '4'] as any)).toThrowError(
-	//         'ParmenidesError'
-	//     );
-	// });
 });
