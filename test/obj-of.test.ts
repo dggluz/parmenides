@@ -14,6 +14,24 @@ describe('`objOf` contract', () => {
 		expect(objContract(obj)).toEqual(obj);
 	});
 
+	it('`objOf(objOf(ContractMap))(x)` (nested `objOf`) returns `x` when it is `x` corresponds with ContractMap', () => {
+		const nestedObjOf = objOf({
+			foo: objOf({
+				bar: str,
+				baz: num
+			})
+		});
+
+		const obj = {
+			foo: {
+				bar: 'bar',
+				baz: 1000
+			}
+		};
+
+		expect(nestedObjOf(obj)).toEqual(obj);
+	});
+
 	it('`objOf(ContractMap)(x)` throws ParmenidesError if `x` is not an object', () => {
 		expect(() => objContract('d' as any)).toThrowError(ParmenidesError as any);
 	});
@@ -81,6 +99,22 @@ describe('`objOf` contract', () => {
 				'0bar': 'hakuna matata'
 			} as any)
 		).toThrowError("Invalid property obj['0bar']:");
+	});
+
+	it('`objOf(objOf(ContractMap))(x)` (nested objOf) throws error with useful information when failing because of subcontract', () => {
+		expect(() =>
+			objOf({
+				foo: objOf({
+					bar: str,
+					baz: num
+				})
+			})({
+				foo: {
+					bar: 'bar',
+					baz: 'baz'
+				}
+			} as any)
+		).toThrowError('Invalid property obj.foo.baz:');
 	});
 
 	it('`objOf(ContractMap)(x)` does not change thrown error if it is not ParmenidesError', () => {
