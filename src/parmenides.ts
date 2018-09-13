@@ -1,5 +1,6 @@
 export * from './errors/parmenides.error';
 export * from './errors/parmenides-arr-of.error';
+export * from './errors/parmenides-extra-property.error';
 export * from './errors/parmenides-instance-of.error';
 export * from './errors/parmenides-never.error';
 export * from './errors/parmenides-obj-of.error';
@@ -25,5 +26,6 @@ export * from './one-of';
 export * from './optional';
 export * from './reg-exp';
 export * from './str';
+export * from './strict-obj-of';
 export * from './undef';
 export * from './union';

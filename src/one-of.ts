@@ -1,6 +1,5 @@
 import { ParmenidesOneOfError } from './errors/parmenides-one-of-error';
-
-const memberOf = <T>(element: T, arr: T[]) => arr.indexOf(element) !== -1;
+import { memberOf } from './member-of';
 
 export const oneOf = <T extends string | number | boolean> (...validValues: T[]) => {
 	return (x: T) => {
