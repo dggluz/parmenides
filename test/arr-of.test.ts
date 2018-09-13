@@ -50,4 +50,15 @@ describe('`arrOf` contract builder', () => {
 			['1', '2', '3', '4', '5']
 		] as any)).toThrowError('Invalid element arr[3][2]:');
 	});
+
+
+	it('`arrOf(<any>)(x)` does not change thrown error if it is not ParmenidesError', () => {
+		const arrContractThatThrowsOtherErrors = arrOf(x => {
+			throw SyntaxError('Just fooling around with errors');
+		});
+
+		expect(() =>
+			arrContractThatThrowsOtherErrors([1, 2, 3] as any)
+		).toThrowError(SyntaxError);
+	});
 });
