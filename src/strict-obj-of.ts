@@ -1,12 +1,11 @@
 import { objOf, MapOfContracts } from './obj-of';
 import { Contract } from './contract';
-import { memberOf } from './member-of';
 import { ParmenidesExtraPropertyError } from './errors/parmenides-extra-property.error';
 
 const requireAll = <T> (contractsMap: MapOfContracts<T>, contract: Contract<T>) => {
 	const checkAllIncluded = (arrA: string[], arrB: string[]) =>
 		arrA.map(anElement => {
-			if (!memberOf(anElement, arrB)) {
+			if (!arrB.includes(anElement)) {
 				throw new ParmenidesExtraPropertyError(anElement);
 			}
 			return anElement;
