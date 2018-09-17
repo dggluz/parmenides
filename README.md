@@ -42,7 +42,7 @@ npm install --save parmenides
 
 ## Usage
 
-The main concept behind the library is "**_contracts_**". A **_contract_** is an _identity function_ that throws a `TypeError` if the parameter doesn't have the expected type.
+The main concept behind the library is "**_contracts_**". A **_contract_** is an _identity function_ that throws an error if the parameter doesn't have the expected type.
 
 For example if you pass a `string` to the `str` **contract**, it will return the same value, for other _types_ it will throw an error:
 
@@ -84,12 +84,12 @@ import { arrOf, num, oneOf } from 'parmenides';
 const onlyNumbers = arrOf(num);
 
 onlyNumbers([1, 2, 3]); // <- Returns [1, 2, 3]
-onlyNumbers(['Hello', 'world', 99] as any); // <- Throws a TypeError
+onlyNumbers(['Hello', 'world', 99] as any); // <- Throws an error
 
 const onlyHobbits = arrOf(oneOf('Frodo', 'Bilbo', 'Merry', 'Pippin', 'Sam', 'Gollum'));
 
 onlyHobbits(['Bilbo', 'Sam']); // <- Returns the array
-onlyHobbits(['Frodo', 'Pippin', 'Gandalf']); // <- Throws a TypeError
+onlyHobbits(['Frodo', 'Pippin', 'Gandalf']); // <- Throws an error
 ```
 
 As you can see, `arrOf` takes a **contract** as parameter and returns another **contract**.
@@ -97,7 +97,7 @@ As you can see, `arrOf` takes a **contract** as parameter and returns another **
 Last, but not least, the `objOf` function is perhaps the most usefull one:
 
 ```typescript
-import { objOf, bool, str, num, arrOf } from 'ts-dynamic-type-checker';
+import { objOf, bool, str, num, arrOf } from 'parmenides';
 
 const personValidator = objOf({
     name: str,
@@ -127,7 +127,7 @@ Notice that the `objOf` function takes an object that describes the _shape_ of t
 It's important to mention that all the contracts are _typed_ and TypeScript with prevent errors if the parameters are incorrect and will inferere the output:
 
 ```typescript
-import { str, num, objOf } from 'ts-dynamic-type-checker';
+import { str, num, objOf } from 'parmenides';
 
 str(9); // TypeScript will error ("string expected").
 const aNumber = num(9); // TypeScript will infere it's a number.
@@ -167,7 +167,7 @@ const fooBar = fooBarContract({
 
 #### A note on `anything`
 
-`anything` is just an _identity function_ that will never throw a `TypeError`. Its static type will be inferred from the value if possible or will default to `any`. It's useful with another functions like `objOf` (view below). For instance you can define a contract like:
+`anything` is just an _identity function_ that will never throw an error. Its static type will be inferred from the value if possible or will default to `any`. It's useful with another functions like `objOf` (view below). For instance you can define a contract like:
 
 ```typescript
 const objHasFooContract = objOf({
