@@ -79,6 +79,12 @@ export function union <A, B, C, D, E, F, G, H, I, J> (
 	j: Contract<J>
 ): Contract<A | B | C | D | E | F | G | H | I | J>;
 
+/**
+ * Takes contracts (up to 10) and retuns a Contract to values that comply with any of those Contracts.
+ * For example: `union(str, num)` will return a Contract to `string | number`.
+ * @param contracts each of the Contracts to which the values should match (it's a variadic function).
+ * @returns Contract that will match values to any of the original Contracts.
+ */
 export function union (...contracts: Contract<any>[]): Contract<any> {
 	return (value: any) => {
 		const match = contracts.reduce((match, aContract) => {

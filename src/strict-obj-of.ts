@@ -2,7 +2,22 @@ import { objOf, MapOfContracts } from './obj-of';
 import { Contract } from './contract';
 import { ParmenidesExtraPropertyError } from './errors/parmenides-extra-property.error';
 
+/**
+ * @ignore
+ * Internal use function. Returns a contract that checks that all of target's properties are
+ * included in the Contract's properties and also delegates to the original contract.
+ * @param contractsMap 
+ * @param contract 
+ */
 const requireAll = <T> (contractsMap: MapOfContracts<T>, contract: Contract<T>) => {
+	/**
+	 * @ignore
+	 * Internal use function. Check that all the elements of arrA are also elements of arrB.
+	 * If not, it throws an error.
+	 * @param arrA 
+	 * @param arrB 
+	 * @returns arrA
+	 */
 	const checkAllIncluded = (arrA: string[], arrB: string[]) =>
 		arrA.map(anElement => {
 			if (!arrB.includes(anElement)) {
@@ -18,6 +33,12 @@ const requireAll = <T> (contractsMap: MapOfContracts<T>, contract: Contract<T>) 
 	};
 };
 
+/**
+ * It's just like `objOf`, but also checks that the object doesn't have extra properties (see `oneOf`).
+ * @param contractMap The object with a Contract for each property.
+ * @returns Contract that validates an object's properties against each corresponding Contract and also
+ * checks that there are not extra properties.
+ */
 export const strictObjOf = <T> (contractMap: MapOfContracts<T>): Contract<T> =>
 	requireAll(contractMap, objOf(contractMap))
 ;
