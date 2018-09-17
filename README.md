@@ -1,8 +1,6 @@
 # Parmenides
 [![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors)
 
-# TS Dynamic Type Checker
-
 > TypeScript library that performs dynamic type checking
 
 TypeScript is great. It warns you of static type errors and hence earns you lots of time and headaches. But your program probably have entrypoints (network requests, file readings, etc.) that can not be trusted completely.
