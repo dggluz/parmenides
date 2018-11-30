@@ -122,7 +122,7 @@ Notice that the `objOf` function takes an object that describes the _shape_ of t
 
 ### Type inference
 
-It's important to mention that all the contracts are _typed_ and TypeScript with prevent errors if the parameters are incorrect and will inferere the output:
+It's important to mention that all the contracts are _typed_ and TypeScript will prevent errors if the parameters are incorrect and will infer the output:
 
 ```typescript
 import { str, num, objOf } from 'parmenides';
