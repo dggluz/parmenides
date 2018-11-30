@@ -19,10 +19,11 @@ export type MapOfContracts<T> = {
  * @param contractsMap An object whose values are Contracts
  * @returns Contract to an object which properties should comply with the corresponding Contracts.
  */
-export const objOf = <T> (contractsMap: MapOfContracts<T>): Contract<T> => {
+export const objOf = <T extends object> (contractsMap: MapOfContracts<T>): Contract<T> => {
 	contractsMap = obj(contractsMap);
 
 	return (target: T) => {
+		obj(target);
 		for (const aContractKey in contractsMap) {
 			const aContract = contractsMap[aContractKey];
 			const prop = target[aContractKey];

@@ -1,6 +1,7 @@
 import { objOf, MapOfContracts } from './obj-of';
 import { Contract } from './contract';
 import { ParmenidesExtraPropertyError } from './errors/parmenides-extra-property.error';
+import { obj } from './obj';
 
 /**
  * @ignore
@@ -9,7 +10,7 @@ import { ParmenidesExtraPropertyError } from './errors/parmenides-extra-property
  * @param contractsMap 
  * @param contract 
  */
-const requireAll = <T> (contractsMap: MapOfContracts<T>, contract: Contract<T>) => {
+const requireAll = <T extends object> (contractsMap: MapOfContracts<T>, contract: Contract<T>) => {
 	/**
 	 * @ignore
 	 * Internal use function. Check that all the elements of arrA are also elements of arrB.
@@ -27,7 +28,7 @@ const requireAll = <T> (contractsMap: MapOfContracts<T>, contract: Contract<T>) 
 		});
 
 	return (target: T) => {
-		const targetKeys = Object.keys(target);
+		const targetKeys = Object.keys(obj(target));
 		checkAllIncluded(targetKeys, Object.keys(contractsMap));
 		return contract(target);
 	};

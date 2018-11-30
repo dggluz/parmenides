@@ -6,12 +6,13 @@ describe('`strictObjOf` contract', () => {
 		bar: num
 	});
 
-    it('`strictObjOf(ContractMap)(x)` throws ParmenidesError if x has extra properties', () => {
-        const objContract = strictObjOf({
-            foo: str,
-            bar: num
-        });
+	it('strictObjOf(ContractMap)(x) throw ParmenidesError if x is not an object', () => {
+        expect(() =>
+            objContract(undefined as any)
+        ).toThrowError(ParmenidesError as any);
+	});
 
+    it('`strictObjOf(ContractMap)(x)` throws ParmenidesError if x has extra properties', () => {
         expect(() =>
             objContract({
                 foo: 'baz',

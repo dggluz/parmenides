@@ -6,6 +6,12 @@ describe('`objOf` contract', () => {
 		bar: num
 	});
 
+	it('objOf(ContractMap)(x) throw ParmenidesError if x is not an object', () => {
+        expect(() =>
+            objContract(undefined as any)
+        ).toThrowError(ParmenidesError as any);
+	});
+
 	it('`objOf(ContractMap)(x)` returns `x` when it is `x` corresponds with ContractMap', () => {
 		const obj = {
 			foo: 'baz',
