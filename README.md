@@ -349,6 +349,27 @@ const instanceOfFooContract = instanceOf(Foo);
 const foo = instanceOfFooContract(new Foo());
 ```
 
+#### `dictionaryOf`
+
+`<T> (IContract<T>) -> IContract<Record<string, T>>`
+
+It takes a `contract` "_`C`_" as a parameter and returns another `contract` that expects a `dictionary` of _elements_ that match _`C`_.
+
+
+```typescript
+const contactsContract = dictionaryOf(
+    objOf({
+        name: str,
+        age: num
+    })
+);
+
+const contacts = contactsContract({
+    john: { name: 'john', age: 27},
+    jane: { name: 'jane', age: 27}
+});
+
+```
 
 ## Credits
 
