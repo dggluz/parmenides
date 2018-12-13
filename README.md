@@ -145,6 +145,44 @@ const fooBar = fooBarContract({
 }); // <- TypeScript will infer type {foo: string; bar: number;}
 ```
 
+furthermore, you can use the **type function** `ContractOf` to put the types of a contract inside a type. For example:
+
+```typescript
+import { ContractOf, num, objOf, str } from 'parmenides';
+
+const personContract = objOf({
+    name: str,
+    age: num
+});
+
+type Person = ContractOf<typeof personContract>;
+
+const john: Person = {
+    name: "John Doe",
+    age: 27
+};
+```
+
+This is very useful as you can define the types for your external sources from contracts, and then use it with its name.
+
+Because of the difference between `type` and `interface`, when you use the first, the type will be an alias for `{ name: string, age: number}`, and if you use an editor like VSCode, that's what you'll see when you hover over it. If you want to give it a name, you can use the following trick:
+
+```typescript
+import { ContractOf, num, objOf, str } from 'parmenides';
+
+const personContract = objOf({
+    name: str,
+    age: num
+});
+
+interface Person extends ContractOf<typeof personContract> {}
+
+const john: Person = {
+    name: "John Doe",
+    age: 27
+};
+```
+
 ## API
 
 ### Built-in `contracts`
