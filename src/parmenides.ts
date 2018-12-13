@@ -14,6 +14,7 @@ export * from './arr-of';
 export * from './bool';
 export * from './contract';
 export * from './date';
+export * from './dictionary';
 export * from './instance-of';
 export * from './lit';
 export * from './never';
@@ -29,3 +30,4 @@ export * from './str';
 export * from './strict-obj-of';
 export * from './undef';
 export * from './union';
+
