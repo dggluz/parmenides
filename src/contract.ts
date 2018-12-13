@@ -6,6 +6,11 @@ import { ParmenidesSimpleError } from './errors/parmenides-simple.error';
 export type Contract <T> = (x: T) => T;
 
 /**
+ * A type function helper to allow extracting the type a contract is validating
+ */
+export type ContractOf <T extends Contract<any>> = T extends Contract<infer C> ? C : never;
+
+/**
  * @ignore
  */
 export type ContractType = 'string' | 'boolean' | 'object' | 'number' | 'undefined';
