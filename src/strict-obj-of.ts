@@ -7,16 +7,16 @@ import { obj } from './obj';
  * @ignore
  * Internal use function. Returns a contract that checks that all of target's properties are
  * included in the Contract's properties and also delegates to the original contract.
- * @param contractsMap 
- * @param contract 
+ * @param contractsMap
+ * @param contract
  */
 const requireAll = <T extends object> (contractsMap: MapOfContracts<T>, contract: Contract<T>) => {
 	/**
 	 * @ignore
 	 * Internal use function. Check that all the elements of arrA are also elements of arrB.
 	 * If not, it throws an error.
-	 * @param arrA 
-	 * @param arrB 
+	 * @param arrA
+	 * @param arrB
 	 * @returns arrA
 	 */
 	const checkAllIncluded = (arrA: string[], arrB: string[]) =>
@@ -40,6 +40,6 @@ const requireAll = <T extends object> (contractsMap: MapOfContracts<T>, contract
  * @returns Contract that validates an object's properties against each corresponding Contract and also
  * checks that there are not extra properties.
  */
-export const strictObjOf = <T> (contractMap: MapOfContracts<T>): Contract<T> =>
+export const strictObjOf = <T extends object> (contractMap: MapOfContracts<T>): Contract<T> =>
 	requireAll(contractMap, objOf(contractMap))
 ;
