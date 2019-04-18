@@ -13,6 +13,12 @@ describe('`arrOf` contract builder', () => {
 		expect(arrOfNumbersContract(numArr)).toEqual(numArr);
 	});
 
+	it('`arrOf(<fn>)` transforms its input if `fn` is a transforming function', () => {
+		const transformingArrOf = arrOf((x: number) => x + 1);
+		const numArr = [1, 2, 3];
+		expect(transformingArrOf(numArr)).toEqual([2, 3, 4]);
+	});
+
 	it('`arrOf(arrOf(<number>))(x)` returns `x` when it is `x` a matrix of numbers', () => {
 		const matrixOfNumbersContract = arrOf(arrOf(num));
 		const numMatrix = [

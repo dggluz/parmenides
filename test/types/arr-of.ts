@@ -8,3 +8,6 @@ arrOf(arrOf(num))([[1, 2, 3], [4, 5, 6], [7, 8, 9]]); // $ExpectType number[][]
 arrOf(str)([1, 2, 3]); // $ExpectError
 arrOf(num)(1); // $ExpectError
 arrOf(arrOf(num))([1, 2, 3]); // $ExpectError
+
+// Using `arrOf` as a transforming function
+arrOf((x: number) => x.toString())([1, 2, 3]); // $ExpectType string[]
