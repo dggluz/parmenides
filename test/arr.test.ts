@@ -2,7 +2,7 @@ import { arr, ParmenidesSimpleError } from '../src/parmenides';
 
 describe('`arr` contract', () => {
 	it('`arr(x)` returns `x` when it is an array', () => {
-		const arr1 = [];
+		const arr1 = [] as number[];
 		const arr2 = [1, 2, 3];
 		expect(arr(arr1)).toBe(arr1);
 		expect(arr(arr2)).toBe(arr2);
