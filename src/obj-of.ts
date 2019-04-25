@@ -33,7 +33,7 @@ export const objOf = <T extends object> (contractsMap: MapOfContracts<T>): Contr
 				if (!isValidationError(e)) {
 					throw e;
 				}
-				throw new ErrorAtProperty(e, aContractKey);
+				throw new ErrorAtProperty(aContractKey, e);
 			}
 		}
 

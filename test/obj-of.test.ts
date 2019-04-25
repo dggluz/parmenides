@@ -57,7 +57,10 @@ describe('`objOf` contract', () => {
 				foo: 'baz'
 			} as any)
 		).toFailWithContractError(
-			new ErrorAtProperty(new TypeMismatch('number', undefined), 'bar')
+			new ErrorAtProperty(
+				'bar',
+				new TypeMismatch('number', undefined)
+			)
 		);
 	});
 
@@ -68,7 +71,10 @@ describe('`objOf` contract', () => {
 				bar: 'this should not be a string'
 			} as any)
 		).toFailWithContractError(
-			new ErrorAtProperty(new TypeMismatch('number', 'this should not be a string'), 'bar')
+			new ErrorAtProperty(
+				'bar',
+				new TypeMismatch('number', 'this should not be a string')
+			)
 		);
 	});
 
@@ -83,7 +89,10 @@ describe('`objOf` contract', () => {
 				'0bar': 'hakuna matata'
 			} as any)
 		).toFailWithContractError(
-			new ErrorAtProperty(new TypeMismatch('number', 'hakuna matata'), '0bar')
+			new ErrorAtProperty(
+				'0bar',
+				new TypeMismatch('number', 'hakuna matata')
+			)
 		);
 	});
 
@@ -102,11 +111,11 @@ describe('`objOf` contract', () => {
 			} as any)
 		).toFailWithContractError(
 			new ErrorAtProperty(
+				'foo',
 				new ErrorAtProperty(
-					new TypeMismatch('number', 'baz'),
-					'baz'
+					'baz',
+					new TypeMismatch('number', 'baz')
 				),
-				'foo'
 			)
 		);
 	});

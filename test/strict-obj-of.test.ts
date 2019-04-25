@@ -69,7 +69,7 @@ describe('`strictObjOf` contract', () => {
 				foo: 'baz'
 			} as any)
 		).toFailWithContractError(
-			new ErrorAtProperty(new TypeMismatch('number', undefined), 'bar')
+			new ErrorAtProperty('bar', new TypeMismatch('number', undefined))
 		);
 	});
 
@@ -80,7 +80,7 @@ describe('`strictObjOf` contract', () => {
 				bar: 'this should not be a string'
 			} as any)
 		).toFailWithContractError(
-			new ErrorAtProperty(new TypeMismatch('number', 'this should not be a string'), 'bar')
+			new ErrorAtProperty('bar', new TypeMismatch('number', 'this should not be a string'))
 		);
 	});
 
@@ -95,7 +95,7 @@ describe('`strictObjOf` contract', () => {
 				'0bar': 'hakuna matata'
 			} as any)
 		).toFailWithContractError(
-			new ErrorAtProperty(new TypeMismatch('number', 'hakuna matata'), '0bar')
+			new ErrorAtProperty('0bar', new TypeMismatch('number', 'hakuna matata'))
 		);
 	});
 
@@ -114,11 +114,11 @@ describe('`strictObjOf` contract', () => {
 			} as any)
 		).toFailWithContractError(
 			new ErrorAtProperty(
+				'foo',
 				new ErrorAtProperty(
-					new TypeMismatch('number', 'baz'),
-					'baz'
-				),
-				'foo'
+					'baz',
+					new TypeMismatch('number', 'baz')
+				)
 			)
 		);
 	});

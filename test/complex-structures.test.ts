@@ -29,8 +29,8 @@ describe('Mixing different complex contracts (objOf, arrOf)', () => {
 		}] as any)).toFailWithContractError(
 			new ErrorAtIndex(3,
 				new ErrorAtProperty(
-					new TypeMismatch('number', '3'),
-					'bar'
+					'bar',
+					new TypeMismatch('number', '3')
 				)
 			)
 		);
@@ -46,10 +46,10 @@ describe('Mixing different complex contracts (objOf, arrOf)', () => {
 			bar: 3
 		} as any)).toFailWithContractError(
 			new ErrorAtProperty(
+				'foo',
 				new ErrorAtIndex(1,
 					new TypeMismatch('string', 2),
-				),
-				'foo'
+				)
 			)
 		);
 	});
@@ -81,8 +81,8 @@ describe('Mixing different complex contracts (objOf, arrOf)', () => {
 		}] as any)).toFailWithContractError(
 			new ErrorAtIndex(3,
 				new ErrorAtProperty(
-					new TypeMismatch('number', '3'),
-					'bar'
+					'bar',
+					new TypeMismatch('number', '3')
 				),
 			)
 		);
@@ -98,10 +98,10 @@ describe('Mixing different complex contracts (objOf, arrOf)', () => {
 			bar: 3
 		} as any)).toFailWithContractError(
 			new ErrorAtProperty(
+				'foo',
 				new ErrorAtIndex(1,
 					new TypeMismatch('string', 2),
-				),
-				'foo'
+				)
 			)
 		);
 	});

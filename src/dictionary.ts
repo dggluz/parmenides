@@ -21,7 +21,7 @@ export const dictionaryOf = <T>(contract: Contract<T>): Contract<Dictionary<T>> 
 			try {
 				contract(dictionary[key]);
 			} catch (e) {
-				throw new ErrorAtProperty(e, key);
+				throw new ErrorAtProperty(key, e);
 			}
 		}
 		return dictionary;

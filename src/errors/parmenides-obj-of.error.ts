@@ -35,8 +35,7 @@ export class ErrorAtProperty extends TypeError implements ValidationError {
 	 * @param originalError the original error thrown.
 	 * @param key the property name of the element the error comes from.
 	 */
-	// TODO: put key before the original error
-	constructor (public originalError: ValidationError, public key: string) {
+	constructor (public key: string, public originalError: ValidationError) {
 		super('');
 
 		this.message = this.explain();
