@@ -1,7 +1,7 @@
-import { ParmenidesError } from './parmenides.error';
+import { ValidationError, isTypeError } from './parmenides.error';
 
 /**
- * Checks if a propertyName can be expressed in "dot notation" (e.g. ".property"). 
+ * Checks if a propertyName can be expressed in "dot notation" (e.g. ".property").
  * @param property the property name to check.
  */
 const canHaveDotNotation = (property: string) =>
@@ -21,40 +21,52 @@ const getAccessor = (property: string) =>
 		`['${property.replace(/'/g, "\\'")}']`
 ;
 
+export const isObjOfError  = isTypeError<ParmenidesObjOfError>('ObjOfError');
+
 /**
- * @class
  * Error that wraps another error generated from an object's property.
  */
-export class ParmenidesObjOfError extends ParmenidesError {
+export class ParmenidesObjOfError extends TypeError implements ValidationError {
+
+	kind = "ValidationError" as const;
+	type = 'ObjOfError';
 	/**
 	 * @constructor
 	 * @param originalError the original error thrown.
 	 * @param key the property name of the element the error comes from.
 	 */
-	constructor (public originalError: ParmenidesError, public key: string) {
+	// TODO: put key before the original error
+	constructor (public originalError: ValidationError, public key: string) {
 		super('');
 
-		this.message = this.getMessage();
+		this.message = this.explain();
 	}
 
 	/**
 	 * @returns a human-readable error message with the original error's message and the path to it.
 	 */
-	getMessage () {
-		return `Invalid property obj${this.getNavigation()}: ${this.originalError.getGenericMessage()}`;
+	explain () {
+		// TODO: improve
+		return 'Invalid property';
+		// return `Invalid property obj${this.getNavigation()}: ${this.originalError.getGenericMessage()}`;
 	}
 
-	/**
-	 * @returns a string representation of the path to where the original error was originated from.
-	 */
-	getNavigation () {
-		return `${getAccessor(this.key)}${this.originalError.getNavigation()}`;
+	eq(error: ValidationError): boolean {
+		return isObjOfError(error) && this.key === error.key && this.originalError.eq(error.originalError);
 	}
+	// /**
+	//  * @returns a string representation of the path to where the original error was originated from.
+	//  */
+	// getNavigation () {
+	// 	return `${getAccessor(this.key)}${this.originalError.getNavigation()}`;
+	// }
 
-	/**
-	 * @returns an error message chunk to be used into a larger error message.
-	 */
-	getGenericMessage () {
-		return this.originalError.getGenericMessage();
-	}
+	// /**
+	//  * @returns an error message chunk to be used into a larger error message.
+	//  */
+	// getGenericMessage () {
+	// 	return this.originalError.getGenericMessage();
+	// }
 }
+
+

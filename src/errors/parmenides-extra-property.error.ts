@@ -1,16 +1,29 @@
-import { ParmenidesError } from './parmenides.error';
+import { ValidationError, isTypeError } from './parmenides.error';
+
+export const isExtraPropertyError  = isTypeError<ParmenidesExtraPropertyError>('ExtraPropertyError');
 
 /**
- * @class
  * Error that represents an unexpected property into an object.
  */
-export class ParmenidesExtraPropertyError extends ParmenidesError {
+export class ParmenidesExtraPropertyError extends TypeError implements ValidationError {
+	kind = 'ValidationError' as const;
+	type = 'ExtraPropertyError';
+
 	/**
 	 * @constructor
-	 * @param propertyName the unexpected property name
+	 * @param extraPropertyName the unexpected property name
 	 */
-	constructor (propertyName: string) {
-		super(`Extra property "${propertyName}"`);
+	constructor (public extraPropertyName: string) {
+		super(`Extra property "${extraPropertyName}"`);
+	}
+
+	explain(): string {
+		return this.message;
+	}
+
+	eq(error: ValidationError): boolean {
+		return isExtraPropertyError(error) && error.extraPropertyName === this.extraPropertyName;
 	}
 }
+
 

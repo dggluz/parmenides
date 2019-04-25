@@ -1,4 +1,4 @@
-import { ParmenidesSimpleError } from './errors/parmenides-simple.error';
+import { TypeMismatch } from './errors/parmenides-simple.error';
 
 /**
  * Null Contract: identity function that throws an error if it is called with something but null.
@@ -7,7 +7,7 @@ import { ParmenidesSimpleError } from './errors/parmenides-simple.error';
  */
 export const nil = (x: null) => {
 	if (x !== null) {
-		throw new ParmenidesSimpleError('null', x);
+		throw new TypeMismatch('null', x);
 	}
 	return x;
 };

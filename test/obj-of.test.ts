@@ -1,4 +1,5 @@
-import { str, num, objOf, ParmenidesError } from '../src/parmenides';
+import { str, num, objOf, TypeMismatch, ParmenidesObjOfError } from '../src/parmenides';
+import './to-fail-with-contract-error';
 
 describe('`objOf` contract', () => {
 	const objContract = objOf({
@@ -6,10 +7,20 @@ describe('`objOf` contract', () => {
 		bar: num
 	});
 
-	it('objOf(ContractMap)(x) throw ParmenidesError if x is not an object', () => {
-        expect(() =>
-            objContract(undefined as any)
-        ).toThrowError(ParmenidesError as any);
+	it('objOf(ContractMap)(x) should fail if `x` is not an object', () => {
+		expect(() =>
+			objContract(undefined as any)
+		).toFailWithContractError(
+			new TypeMismatch('object', undefined)
+		);
+	});
+
+	it('objOf(ContractMap)(x) should fail if `x` is not an object', () => {
+		expect(
+			() => objContract('d' as any)
+		).toFailWithContractError(
+			new TypeMismatch('object', 'd')
+		);
 	});
 
 	it('`objOf(ContractMap)(x)` returns `x` when it is `x` corresponds with ContractMap', () => {
@@ -20,7 +31,7 @@ describe('`objOf` contract', () => {
 		expect(objContract(obj)).toEqual(obj);
 	});
 
-	it('`objOf(objOf(ContractMap))(x)` (nested `objOf`) returns `x` when it is `x` corresponds with ContractMap', () => {
+	it('`objOf(objOf(ContractMap))(x)` (nested `objOf`) should work as the identity function', () => {
 		const nestedObjOf = objOf({
 			foo: objOf({
 				bar: str,
@@ -38,60 +49,27 @@ describe('`objOf` contract', () => {
 		expect(nestedObjOf(obj)).toEqual(obj);
 	});
 
-	it('`objOf(ContractMap)(x)` throws ParmenidesError if `x` is not an object', () => {
-		expect(() => objContract('d' as any)).toThrowError(ParmenidesError as any);
-	});
 
-	it('`objOf(ContractMap)(x)` throws ParmenidesError if x is missing a property', () => {
+
+	it('`objOf(ContractMap)(x)` should fail if x is missing a property', () => {
 		expect(() =>
 			objContract({
 				foo: 'baz'
 			} as any)
-		).toThrowError(ParmenidesError as any);
+		).toFailWithContractError(
+			new ParmenidesObjOfError(new TypeMismatch('number', undefined), 'bar')
+		);
 	});
 
-	it('`objOf(ContractMap)(x)` throws ParmenidesError if any of x\'s properties does not respect its subcontract', () => {
+	it('`objOf(ContractMap)(x)` should fail if any of x\'s properties does not respect its subcontract', () => {
 		expect(() =>
 			objContract({
 				foo: 'baz',
 				bar: 'this should not be a string'
 			} as any)
-		).toThrowError(ParmenidesError as any);
-	});
-
-	it('`objOf(ContractMap)(x)` throws error with useful information when failing because of subcontract', () => {
-		// Contains prop name
-		expect(() =>
-			objContract({
-				foo: 'baz',
-				bar: 'hakuna matata'
-			} as any)
-		).toThrowError('Invalid property obj.bar:');
-
-		// The following `expect`s check the `num` contract errors
-		// Contains prop value
-		expect(() =>
-			objContract({
-				foo: 'baz',
-				bar: 'hakuna matata'
-			} as any)
-		).toThrowError('hakuna matata');
-
-		// Contains actual type
-		expect(() =>
-			objContract({
-				foo: 'baz',
-				bar: 'hakuna matata'
-			} as any)
-		).toThrowError('string');
-
-		// Contains expected type
-		expect(() =>
-			objContract({
-				foo: 'baz',
-				bar: 'hakuna matata'
-			} as any)
-		).toThrowError('number');
+		).toFailWithContractError(
+			new ParmenidesObjOfError(new TypeMismatch('number', 'this should not be a string'), 'bar')
+		);
 	});
 
 	it('`objOf(ContractMap)(x)` throws error with useful information when failing because of subcontract (non-dottable property name)', () => {
@@ -104,10 +82,12 @@ describe('`objOf` contract', () => {
 				foo: 'baz',
 				'0bar': 'hakuna matata'
 			} as any)
-		).toThrowError("Invalid property obj['0bar']:");
+		).toFailWithContractError(
+			new ParmenidesObjOfError(new TypeMismatch('number', 'hakuna matata'), '0bar')
+		);
 	});
 
-	it('`objOf(objOf(ContractMap))(x)` (nested objOf) throws error with useful information when failing because of subcontract', () => {
+	it('`objOf(objOf(ContractMap))(x)` (nested objOf) should fail when a subcontract fails', () => {
 		expect(() =>
 			objOf({
 				foo: objOf({
@@ -120,7 +100,15 @@ describe('`objOf` contract', () => {
 					baz: 'baz'
 				}
 			} as any)
-		).toThrowError('Invalid property obj.foo.baz:');
+		).toFailWithContractError(
+			new ParmenidesObjOfError(
+				new ParmenidesObjOfError(
+					new TypeMismatch('number', 'baz'),
+					'baz'
+				),
+				'foo'
+			)
+		);
 	});
 
 	it('`objOf(ContractMap)(x)` does not change thrown error if it is not ParmenidesError', () => {

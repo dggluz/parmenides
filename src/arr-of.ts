@@ -1,7 +1,7 @@
 import { Contract } from './contract';
 import { arr } from './arr';
-import { ParmenidesError } from './errors/parmenides.error';
-import { ParmenidesArrOfError } from './errors/parmenides-arr-of.error';
+import { isValidationError } from './errors/parmenides.error';
+import { ErrorAtIndex } from './errors/parmenides-arr-of.error';
 
 /**
  * Function that takes a Contract and returns another Contract for an array where all the elements
@@ -18,8 +18,8 @@ export const arrOf = <T> (contract: Contract<T>): Contract<T[]> =>
 					return contract(elem);
 				}
 				catch (err) {
-					if (err instanceof ParmenidesError) {
-						throw new ParmenidesArrOfError(err, i);
+					if (isValidationError(err)) {
+						throw new ErrorAtIndex(i, err);
 					}
 					else {
 						throw err;

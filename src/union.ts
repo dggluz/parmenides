@@ -1,5 +1,5 @@
 import { Contract } from './contract';
-import { ParmenidesError } from './errors/parmenides.error';
+import { isValidationError } from './errors/parmenides.error';
 import { ParmenidesUnionError } from './errors/parmenides-union.error';
 
 
@@ -93,7 +93,7 @@ export function union (...contracts: Contract<any>[]): Contract<any> {
 				return true;
 			}
 			catch (err) {
-				if (err instanceof ParmenidesError) {
+				if (isValidationError(err)) {
 					return match || false;
 				}
 				else {

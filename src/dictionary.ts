@@ -1,5 +1,4 @@
 import { Contract } from "./contract";
-import { ParmenidesError } from "./errors/parmenides.error";
 import { ParmenidesObjOfError } from "./errors/parmenides-obj-of.error";
 import { obj } from "./obj";
 

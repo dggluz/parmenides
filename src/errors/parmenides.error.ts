@@ -1,40 +1,26 @@
 /**
- * @abstract
- * @class
  * A generic error. All other errors will inherit from this one, hence it's easy to check if an error is a
  * ParmenidesError (its instanceof ParmenidesError or has the public property ParmenidesError = 'ParmenidesError').
  * It also has some generic error methods.
  */
-export abstract class ParmenidesError extends TypeError {
-	ParmenidesError = 'ParmenidesError';
+// export interface ParmenidesError
 
-	/**
-	 * @constructor
-	 * @param message Message string
-	 */
-	constructor (message: string) {
-		super(message);
-	}
+// export type ParmenidesError = BlaError | BleError
+export interface ValidationError {
+	kind: 'ValidationError'
+	type: string;
 
-	/**
-	 * @returns the message, intended to be human readable by itself.
-	 */
-	getMessage () {
-		return this.message;
-	}
+	explain(): string;
+	eq(error: ValidationError): boolean;
+	// TODO: add message property?
+}
 
-	/**
-	 * @returns an error message chunk intended to be used into a larger error message.
-	 */
-	getGenericMessage () {
-		return this.getMessage();
-	}
+export const isTypeError = <ErrorType>(type: string) =>
+	(error: any): error is ErrorType =>
+		error.hasOwnProperty('type') && error.type === type
+;
 
-	/**
-	 * @returns the "navigation" to the error source (useful only for nested errors, where the navigation
-	 * is the path to the property or element that doesn't match the contract).
-	 */
-	getNavigation () {
-		return '';
-	}
+
+export function isValidationError(error: any): error is ValidationError {
+	return typeof error === 'object' && error.hasOwnProperty('kind') && error.kind === 'ValidationError';
 }
