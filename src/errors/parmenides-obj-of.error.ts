@@ -21,15 +21,15 @@ const getAccessor = (property: string) =>
 		`['${property.replace(/'/g, "\\'")}']`
 ;
 
-export const isObjOfError  = isTypeError<ParmenidesObjOfError>('ObjOfError');
+export const isErrorAtProperty  = isTypeError<ErrorAtProperty>('ErrorAtProperty');
 
 /**
  * Error that wraps another error generated from an object's property.
  */
-export class ParmenidesObjOfError extends TypeError implements ValidationError {
+export class ErrorAtProperty extends TypeError implements ValidationError {
 
 	kind = "ValidationError" as const;
-	type = 'ObjOfError';
+	type = 'ErrorAtProperty';
 	/**
 	 * @constructor
 	 * @param originalError the original error thrown.
@@ -52,7 +52,7 @@ export class ParmenidesObjOfError extends TypeError implements ValidationError {
 	}
 
 	eq(error: ValidationError): boolean {
-		return isObjOfError(error) && this.key === error.key && this.originalError.eq(error.originalError);
+		return isErrorAtProperty(error) && this.key === error.key && this.originalError.eq(error.originalError);
 	}
 	// /**
 	//  * @returns a string representation of the path to where the original error was originated from.

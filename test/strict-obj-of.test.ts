@@ -1,4 +1,4 @@
-import { str, num, strictObjOf, ParmenidesExtraPropertyError, TypeMismatch, ParmenidesObjOfError } from '../src/parmenides';
+import { str, num, strictObjOf, ParmenidesExtraPropertyError, TypeMismatch, ErrorAtProperty } from '../src/parmenides';
 import './to-fail-with-contract-error';
 
 describe('`strictObjOf` contract', () => {
@@ -69,7 +69,7 @@ describe('`strictObjOf` contract', () => {
 				foo: 'baz'
 			} as any)
 		).toFailWithContractError(
-			new ParmenidesObjOfError(new TypeMismatch('number', undefined), 'bar')
+			new ErrorAtProperty(new TypeMismatch('number', undefined), 'bar')
 		);
 	});
 
@@ -80,7 +80,7 @@ describe('`strictObjOf` contract', () => {
 				bar: 'this should not be a string'
 			} as any)
 		).toFailWithContractError(
-			new ParmenidesObjOfError(new TypeMismatch('number', 'this should not be a string'), 'bar')
+			new ErrorAtProperty(new TypeMismatch('number', 'this should not be a string'), 'bar')
 		);
 	});
 
@@ -95,7 +95,7 @@ describe('`strictObjOf` contract', () => {
 				'0bar': 'hakuna matata'
 			} as any)
 		).toFailWithContractError(
-			new ParmenidesObjOfError(new TypeMismatch('number', 'hakuna matata'), '0bar')
+			new ErrorAtProperty(new TypeMismatch('number', 'hakuna matata'), '0bar')
 		);
 	});
 
@@ -113,8 +113,8 @@ describe('`strictObjOf` contract', () => {
 				}
 			} as any)
 		).toFailWithContractError(
-			new ParmenidesObjOfError(
-				new ParmenidesObjOfError(
+			new ErrorAtProperty(
+				new ErrorAtProperty(
 					new TypeMismatch('number', 'baz'),
 					'baz'
 				),

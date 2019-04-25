@@ -1,4 +1,4 @@
-import { arrOf, objOf, str, num, strictObjOf, ErrorAtIndex, TypeMismatch, ParmenidesObjOfError } from '../src/parmenides';
+import { arrOf, objOf, str, num, strictObjOf, ErrorAtIndex, TypeMismatch, ErrorAtProperty } from '../src/parmenides';
 import './to-fail-with-contract-error';
 
 describe('Mixing different complex contracts (objOf, arrOf)', () => {
@@ -28,7 +28,7 @@ describe('Mixing different complex contracts (objOf, arrOf)', () => {
 			bar: 3
 		}] as any)).toFailWithContractError(
 			new ErrorAtIndex(3,
-				new ParmenidesObjOfError(
+				new ErrorAtProperty(
 					new TypeMismatch('number', '3'),
 					'bar'
 				)
@@ -45,7 +45,7 @@ describe('Mixing different complex contracts (objOf, arrOf)', () => {
 			foo: ['one', 2, 'three'],
 			bar: 3
 		} as any)).toFailWithContractError(
-			new ParmenidesObjOfError(
+			new ErrorAtProperty(
 				new ErrorAtIndex(1,
 					new TypeMismatch('string', 2),
 				),
@@ -80,7 +80,7 @@ describe('Mixing different complex contracts (objOf, arrOf)', () => {
 			bar: 3
 		}] as any)).toFailWithContractError(
 			new ErrorAtIndex(3,
-				new ParmenidesObjOfError(
+				new ErrorAtProperty(
 					new TypeMismatch('number', '3'),
 					'bar'
 				),
@@ -97,7 +97,7 @@ describe('Mixing different complex contracts (objOf, arrOf)', () => {
 			foo: ['one', 2, 'three'],
 			bar: 3
 		} as any)).toFailWithContractError(
-			new ParmenidesObjOfError(
+			new ErrorAtProperty(
 				new ErrorAtIndex(1,
 					new TypeMismatch('string', 2),
 				),

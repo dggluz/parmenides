@@ -1,7 +1,7 @@
 import { Contract } from './contract';
 import { obj } from './obj';
 import { isValidationError } from './errors/parmenides.error';
-import { ParmenidesObjOfError } from './errors/parmenides-obj-of.error';
+import { ErrorAtProperty } from './errors/parmenides-obj-of.error';
 
 /**
  * @ignore
@@ -33,7 +33,7 @@ export const objOf = <T extends object> (contractsMap: MapOfContracts<T>): Contr
 				if (!isValidationError(e)) {
 					throw e;
 				}
-				throw new ParmenidesObjOfError(e, aContractKey);
+				throw new ErrorAtProperty(e, aContractKey);
 			}
 		}
 
