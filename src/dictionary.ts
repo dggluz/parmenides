@@ -1,5 +1,5 @@
 import { Contract } from "./contract";
-import { ErrorAtProperty } from "./errors/parmenides-obj-of.error";
+import { ErrorAtProperty } from "./errors/error-at-property";
 import { obj } from "./obj";
 
 

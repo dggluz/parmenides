@@ -1,4 +1,4 @@
-import { TypeMismatch } from './errors/parmenides-simple.error';
+import { TypeMismatch } from './errors/type-mismatch';
 
 /**
  * @ignore

@@ -1,11 +1,11 @@
 export * from './errors/parmenides.error';
-export * from './errors/parmenides-arr-of.error';
+export * from './errors/error-at-index';
 export * from './errors/parmenides-extra-property.error';
 export * from './errors/parmenides-instance-of.error';
 export * from './errors/parmenides-never.error';
-export * from './errors/parmenides-obj-of.error';
+export * from './errors/error-at-property';
 export * from './errors/parmenides-one-of-error';
-export * from './errors/parmenides-simple.error';
+export * from './errors/type-mismatch';
 export * from './errors/parmenides-union.error';
 
 export * from './anything';

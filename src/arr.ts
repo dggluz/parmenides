@@ -1,4 +1,4 @@
-import { TypeMismatch } from './errors/parmenides-simple.error';
+import { TypeMismatch } from './errors/type-mismatch';
 
 /**
  * Array Contract: identity function that throws an error if it is called with something but an array.

@@ -1,4 +1,4 @@
-import { TypeMismatch } from './errors/parmenides-simple.error';
+import { TypeMismatch } from './errors/type-mismatch';
 
 /**
  * Null Contract: identity function that throws an error if it is called with something but null.

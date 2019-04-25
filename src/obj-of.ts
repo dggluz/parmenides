@@ -1,7 +1,7 @@
 import { Contract } from './contract';
 import { obj } from './obj';
 import { isValidationError } from './errors/parmenides.error';
-import { ErrorAtProperty } from './errors/parmenides-obj-of.error';
+import { ErrorAtProperty } from './errors/error-at-property';
 
 /**
  * @ignore

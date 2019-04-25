@@ -1,4 +1,4 @@
-import { TypeMismatch } from './errors/parmenides-simple.error';
+import { TypeMismatch } from './errors/type-mismatch';
 
 /**
  * A Contract is an identity function that does some checks on the input and throws an error if the checks don't pass.

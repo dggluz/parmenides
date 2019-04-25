@@ -1,7 +1,7 @@
 import { Contract } from './contract';
 import { arr } from './arr';
 import { isValidationError } from './errors/parmenides.error';
-import { ErrorAtIndex } from './errors/parmenides-arr-of.error';
+import { ErrorAtIndex } from './errors/error-at-index';
 
 /**
  * Function that takes a Contract and returns another Contract for an array where all the elements
