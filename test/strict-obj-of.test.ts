@@ -123,7 +123,7 @@ describe('`strictObjOf` contract', () => {
 		);
 	});
 
-	it('`strictObjOf(ContractMap)(x)` does not change thrown error if it is not ParmenidesError', () => {
+	it('`strictObjOf(ContractMap)(x)` does not change thrown error if it is not a ValidationError', () => {
 		const objContractThatThrowsOtherErrors = strictObjOf({
 			foo: str,
 			bar: x => {

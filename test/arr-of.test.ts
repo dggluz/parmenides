@@ -1,4 +1,4 @@
-import { arrOf, str, num, ErrorAtIndex, TypeMismatch, ValidationError, isValidationError, anything } from '../src/parmenides';
+import { arrOf, str, num, ErrorAtIndex, TypeMismatch, anything } from '../src/parmenides';
 import './to-fail-with-contract-error';
 
 describe('`arrOf` contract builder', () => {
@@ -60,7 +60,7 @@ describe('`arrOf` contract builder', () => {
 	});
 
 
-	it('`arrOf(<any>)(x)` does not change thrown error if it is not ParmenidesError', () => {
+	it('`arrOf(<any>)(x)` does not change thrown error if it is not a ValidationError', () => {
 		const arrContractThatThrowsOtherErrors = arrOf(x => {
 			throw SyntaxError('Just fooling around with errors');
 		});

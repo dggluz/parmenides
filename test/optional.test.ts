@@ -1,16 +1,23 @@
-import { optional, str, ParmenidesError } from '../src/parmenides';
+import { optional, str, TypeMismatch } from '../src/parmenides';
+import './to-fail-with-contract-error';
 
 describe('`optional` contract builder', () => {
-	it('`optional(contract)(x)` returns `x` when it is a undefined', () => {
+	it('`optional(str)(undefined)` returns undefined', () => {
 		expect(optional(str)(undefined)).toBe(undefined);
 	});
-	it('`optional(contract)(x)` returns `x` when it matches with `contract`', () => {
+	it('`optional(str)("Hello world")` returns the string', () => {
 		expect(optional(str)('Hello world')).toBe('Hello world');
 	});
 
-	it('`undef(x)` throws ParmenidesError if `x` is not a undefined and doesn\'t match with `contract`', () => {
-		expect(() => optional(str)(9 as any)).toThrowError(ParmenidesError as any);
-		expect(() => optional(str)({} as any)).toThrowError(ParmenidesError as any);
-		expect(() => optional(str)(false as any)).toThrowError(ParmenidesError as any);
+	it('`optional(str)(9)` fails', () => {
+		expect(() => optional(str)(9 as any)).toFailWithContractError(
+			new TypeMismatch('string', 9)
+		);
+	});
+
+	it('`optional(str)(false)` fails', () => {
+		expect(() => optional(str)(false as any)).toFailWithContractError(
+			new TypeMismatch('string', false)
+		);
 	});
 });

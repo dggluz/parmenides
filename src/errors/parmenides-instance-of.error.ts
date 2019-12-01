@@ -13,9 +13,8 @@ export type Constructor <T> = {
  * Error thrown when an object is instance of other class than the expected one.
  */
 export class ParmenidesInstanceOfError extends TypeError implements ValidationError {
-
+	name = 'InstanceOfError';
 	kind = 'ValidationError' as const;
-	type = 'InstanceOfError';
 
 	/**
 	 * @constructor
@@ -27,6 +26,10 @@ export class ParmenidesInstanceOfError extends TypeError implements ValidationEr
 	}
 
 	explain() {
+		return this.message;
+	}
+
+	explainCause() {
 		return this.message;
 	}
 

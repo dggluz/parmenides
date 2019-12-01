@@ -1,4 +1,5 @@
 import { date, ParmenidesInstanceOfError } from '../src/parmenides';
+import './to-fail-with-contract-error';
 
 describe('`date` contract', () => {
 	it('`date(x)` returns `x` when it is a date', () => {
@@ -7,10 +8,10 @@ describe('`date` contract', () => {
 	});
 
 	it('`date(x)` throws ParmenidesInstanceOfError if `x` is not an instance of Date', () => {
-		expect(() => date(9 as any)).toThrowError(ParmenidesInstanceOfError);
-		expect(() => date({} as any)).toThrowError(ParmenidesInstanceOfError);
-		expect(() => date('foo' as any)).toThrowError(ParmenidesInstanceOfError);
-		expect(() => date(new Date().getTime() as any)).toThrowError(ParmenidesInstanceOfError);
-		expect(() => date(undefined as any)).toThrowError(ParmenidesInstanceOfError);
+		const obj = {};
+		expect(() => date(9 as any)).toFailWithContractError(new ParmenidesInstanceOfError(Date, 9));
+		expect(() => date(obj as any)).toFailWithContractError(new ParmenidesInstanceOfError(Date, obj));
+		expect(() => date('foo' as any)).toFailWithContractError(new ParmenidesInstanceOfError(Date, 'foo'));
+		expect(() => date(undefined as any)).toFailWithContractError(new ParmenidesInstanceOfError(Date, undefined));
 	});
 });

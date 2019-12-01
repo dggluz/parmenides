@@ -21,8 +21,8 @@ function arrEq (xs: BasicType[], ys: BasicType[]): boolean {
  */
 // TODO: rename to OneOfError
 export class ParmenidesOneOfError extends TypeError implements ValidationError {
+	name = "OneOfError"
 	kind = 'ValidationError' as const;
-	type = 'OneOfError';
 
 	/**
 	 * @constructor
@@ -37,8 +37,12 @@ export class ParmenidesOneOfError extends TypeError implements ValidationError {
 		);
 	}
 
-	explain(): string {
-		throw new Error("Method not implemented.");
+	explain() {
+		return this.message;
+	}
+
+	explainCause() {
+		return this.message;
 	}
 
 	eq(error: ValidationError): boolean {

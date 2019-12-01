@@ -1,4 +1,4 @@
-import { ValidationError, isTypeError } from './parmenides.error';
+import { ValidationError, isTypeError, getAccesor } from './parmenides.error';
 
 /**
  * Checks if a propertyName can be expressed in "dot notation" (e.g. ".property").
@@ -15,7 +15,7 @@ const canHaveDotNotation = (property: string) =>
  * @param property the property name to access.
  * @returns a string representation of the access to a property
  */
-const getAccessor = (property: string) =>
+const getAccessorFromProperty = (property: string) =>
 	canHaveDotNotation(property) ?
 		`.${property}` :
 		`['${property.replace(/'/g, "\\'")}']`
@@ -27,9 +27,8 @@ export const isErrorAtProperty  = isTypeError<ErrorAtProperty>('ErrorAtProperty'
  * Error that wraps another error generated from an object's property.
  */
 export class ErrorAtProperty extends TypeError implements ValidationError {
-
-	kind = "ValidationError" as const;
-	type = 'ErrorAtProperty';
+	name = 'ErrorAtProperty'
+	kind = 'ValidationError' as const;
 	/**
 	 * @constructor
 	 * @param originalError the original error thrown.
@@ -45,27 +44,26 @@ export class ErrorAtProperty extends TypeError implements ValidationError {
 	 * @returns a human-readable error message with the original error's message and the path to it.
 	 */
 	explain () {
-		// TODO: improve
-		return 'Invalid property';
-		// return `Invalid property obj${this.getNavigation()}: ${this.originalError.getGenericMessage()}`;
+		return `property "${this.getAccesor(true)}" ${this.explainCause()}`;
 	}
 
 	eq(error: ValidationError): boolean {
 		return isErrorAtProperty(error) && this.key === error.key && this.originalError.eq(error.originalError);
 	}
-	// /**
-	//  * @returns a string representation of the path to where the original error was originated from.
-	//  */
-	// getNavigation () {
-	// 	return `${getAccessor(this.key)}${this.originalError.getNavigation()}`;
-	// }
 
-	// /**
-	//  * @returns an error message chunk to be used into a larger error message.
-	//  */
-	// getGenericMessage () {
-	// 	return this.originalError.getGenericMessage();
-	// }
+	getAccesor (isTopLevelError: boolean) {
+		const originalErrorAccessor = getAccesor(this.originalError, false)
+
+		if (isTopLevelError) {
+			return this.key + originalErrorAccessor;
+		} else {
+			return `${getAccessorFromProperty(this.key)}${originalErrorAccessor}`;
+		}
+	}
+
+	explainCause() {
+		return this.originalError.explainCause();
+	}
 }
 
 

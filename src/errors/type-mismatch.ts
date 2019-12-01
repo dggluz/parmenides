@@ -1,16 +1,14 @@
 import { ValidationError, isTypeError } from './parmenides.error';
 
-export const isTypeMismatchError = isTypeError<TypeMismatch>('TypeMismatchError');
+export const isTypeMismatchError = isTypeError<TypeMismatch>('TypeMismatch');
 
 /**
- * Generic ParmenidesError, used for most cases where a value of a type was expected
- * but a value of another type was received.
+ * Error thrown when one type was expected, but got another type instead
  */
 // TODO: rename to TypeMismatchError
 export class TypeMismatch extends TypeError implements ValidationError  {
-
+	name = "TypeMismatch";
 	kind = 'ValidationError' as const;
-	type = 'TypeMismatchError';
 
 	/**
 	 * @constructor
@@ -25,6 +23,14 @@ export class TypeMismatch extends TypeError implements ValidationError  {
 
 	explain(): string {
 		return this.message;
+	}
+
+	explainCause(): string {
+		if ((typeof this.actualValue) === 'undefined') {
+			return `was expected to be of type "${this.expectedType}", but is undefined`;
+		} else {
+			return `was expected to be of type "${this.expectedType}", but is of type "${typeof this.actualValue}" (with value "${this.actualValue}")`;
+		}
 	}
 
 	eq(error: ValidationError): boolean {

@@ -8,9 +8,10 @@ export const isNeverError  = isTypeError<ParmenidesNeverError>('NeverError');
 /**
  * Error that is thrown whenever a value was expected to never happen but happened.
  */
+// TODO: Shouldn't this be a TypeMismatch?
 export class ParmenidesNeverError extends TypeError implements ValidationError {
+	name = "NeverError"
 	kind = 'ValidationError' as const;
-	type = 'NeverError';
 
 	/**
 	 * @constructor
@@ -21,6 +22,10 @@ export class ParmenidesNeverError extends TypeError implements ValidationError {
 	}
 
 	explain() {
+		return this.message;
+	}
+
+	explainCause() {
 		return this.message;
 	}
 

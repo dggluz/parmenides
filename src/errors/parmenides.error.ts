@@ -1,26 +1,56 @@
-/**
- * A generic error. All other errors will inherit from this one, hence it's easy to check if an error is a
- * ParmenidesError (its instanceof ParmenidesError or has the public property ParmenidesError = 'ParmenidesError').
- * It also has some generic error methods.
- */
-// export interface ParmenidesError
-
-// export type ParmenidesError = BlaError | BleError
 export interface ValidationError {
-	kind: 'ValidationError'
-	type: string;
+	kind: 'ValidationError';
+	name: string;
 
+	/**
+	 * Explains the error as if it was called from a TOP level perspective
+	 */
 	explain(): string;
+
+	/**
+	 * Explain the root cause of the error
+	 */
+	explainCause(): string;
+
+	/**
+	 * Check if two ValidationError's are the same
+	 * @param error
+	 */
 	eq(error: ValidationError): boolean;
 	// TODO: add message property?
 }
 
+export interface AccesableError {
+	/**
+	 * Returns a string representation of the path to where the original
+	 * error was originated from. For example "[0].id"
+	 * @param isTopLevelError Indicates if this is the top level error
+	 */
+	getAccesor(isTopLevelError: boolean): string;
+}
+
+export const isAccesableError = (error: any): error is AccesableError =>
+	typeof error === 'object' &&
+	'getAccesor' in error
+;
+
+export const getAccesor = (error: any, isTopLevelError: boolean) =>
+	isAccesableError(error)
+		? error.getAccesor(isTopLevelError)
+		: ''
+;
+
 export const isTypeError = <ErrorType>(type: string) =>
 	(error: any): error is ErrorType =>
-		error.hasOwnProperty('type') && error.type === type
+		typeof error === 'object' &&
+		'name' in error &&
+		// error.hasOwnProperty('type') &&
+		error.name === type
 ;
 
 
-export function isValidationError(error: any): error is ValidationError {
-	return typeof error === 'object' && error.hasOwnProperty('kind') && error.kind === 'ValidationError';
-}
+export const isValidationError = (error: any): error is ValidationError =>
+	typeof error === 'object' &&
+	error.hasOwnProperty('kind') &&
+	error.kind === 'ValidationError'
+;
