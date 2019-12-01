@@ -1,6 +1,5 @@
 import { Contract } from "./contract";
-import { ParmenidesError } from "./errors/parmenides.error";
-import { ParmenidesObjOfError } from "./errors/parmenides-obj-of.error";
+import { ErrorAtProperty } from "./errors/error-at-property";
 import { obj } from "./obj";
 
 
@@ -22,7 +21,7 @@ export const dictionaryOf = <T>(contract: Contract<T>): Contract<Dictionary<T>> 
 			try {
 				contract(dictionary[key]);
 			} catch (e) {
-				throw new ParmenidesObjOfError(e, key);
+				throw new ErrorAtProperty(key, e);
 			}
 		}
 		return dictionary;

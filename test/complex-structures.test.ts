@@ -1,7 +1,8 @@
-import { arrOf, objOf, str, num, strictObjOf } from '../src/parmenides';
+import { arrOf, objOf, str, num, strictObjOf, ErrorAtIndex, TypeMismatch, ErrorAtProperty } from '../src/parmenides';
+import './to-fail-with-contract-error';
 
 describe('Mixing different complex contracts (objOf, arrOf)', () => {
-	it('`arrOf(objOf(<any>))(x)` throws a readable error', () => {
+	it('`arrOf(objOf(<any>))(x)` throws a mixed error', () => {
 		const arrOfObjOf = arrOf(objOf({
 			foo: str,
 			bar: num
@@ -25,7 +26,14 @@ describe('Mixing different complex contracts (objOf, arrOf)', () => {
 		}, {
 			foo: 'foo',
 			bar: 3
-		}] as any)).toThrowError('Invalid element arr[3].bar:');
+		}] as any)).toFailWithContractError(
+			new ErrorAtIndex(3,
+				new ErrorAtProperty(
+					'bar',
+					new TypeMismatch('number', '3')
+				)
+			)
+		);
 	});
 
 	it('`objOf(arrOf(<any>))(x)` throws a readable error', () => {
@@ -36,7 +44,14 @@ describe('Mixing different complex contracts (objOf, arrOf)', () => {
 		expect(() => objOfArrOf({
 			foo: ['one', 2, 'three'],
 			bar: 3
-		} as any)).toThrowError('Invalid property obj.foo[1]');
+		} as any)).toFailWithContractError(
+			new ErrorAtProperty(
+				'foo',
+				new ErrorAtIndex(1,
+					new TypeMismatch('string', 2),
+				)
+			)
+		);
 	});
 
 	it('`arrOf(stictObjOf(<any>))(x)` throws a readable error', () => {
@@ -63,7 +78,14 @@ describe('Mixing different complex contracts (objOf, arrOf)', () => {
 		}, {
 			foo: 'foo',
 			bar: 3
-		}] as any)).toThrowError('Invalid element arr[3].bar:');
+		}] as any)).toFailWithContractError(
+			new ErrorAtIndex(3,
+				new ErrorAtProperty(
+					'bar',
+					new TypeMismatch('number', '3')
+				),
+			)
+		);
 	});
 
 	it('`strictObjOf(arrOf(<any>))(x)` throws a readable error', () => {
@@ -74,6 +96,13 @@ describe('Mixing different complex contracts (objOf, arrOf)', () => {
 		expect(() => strictObjOfArrOf({
 			foo: ['one', 2, 'three'],
 			bar: 3
-		} as any)).toThrowError('Invalid property obj.foo[1]');
+		} as any)).toFailWithContractError(
+			new ErrorAtProperty(
+				'foo',
+				new ErrorAtIndex(1,
+					new TypeMismatch('string', 2),
+				)
+			)
+		);
 	});
 });

@@ -1,4 +1,4 @@
-import { ParmenidesSimpleError } from './errors/parmenides-simple.error';
+import { TypeMismatch } from './errors/type-mismatch';
 
 /**
  * Array Contract: identity function that throws an error if it is called with something but an array.
@@ -9,7 +9,7 @@ import { ParmenidesSimpleError } from './errors/parmenides-simple.error';
  */
 export const arr = <T> (xs: T[]) => {
 	if (!Array.isArray(xs)) {
-		throw new ParmenidesSimpleError('Array', xs);
+		throw new TypeMismatch('Array', xs);
 	}
 	return xs;
 };

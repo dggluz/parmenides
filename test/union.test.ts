@@ -1,4 +1,5 @@
-import { union, str, num, ParmenidesUnionError } from '../src/parmenides';
+import { union, str, num, ParmenidesUnionError, TypeMismatch } from '../src/parmenides';
+import './to-fail-with-contract-error';
 
 describe('`union` contract builder', () => {
 	const unionStrNum = union(str, num);
@@ -11,7 +12,12 @@ describe('`union` contract builder', () => {
 	});
 
 	it('`union(str, num)(x)` throws ParmenidesUnionError if `x` is not a number nor a string', () => {
-		expect(() => unionStrNum(true as any)).toThrowError(ParmenidesUnionError);
+		expect(() => unionStrNum(true as any)).toFailWithContractError(
+			new ParmenidesUnionError([str, num], [
+				new TypeMismatch('string', true),
+				new TypeMismatch('number', true),
+			], true)
+		);
 	});
 
 	it('`union(str, num)(x)` throws ParmenidesUnionError that should have a general message', () => {
@@ -36,7 +42,7 @@ describe('`union` contract builder', () => {
 		);
 
 		expect(() =>
-			unionThatThrowsSyntaxError('hello' as any)
+			unionThatThrowsSyntaxError(9 as any)
 		).toThrowError(SyntaxError);
 	});
 });

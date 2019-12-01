@@ -1,4 +1,4 @@
-import { ParmenidesSimpleError } from './errors/parmenides-simple.error';
+import { TypeMismatch } from './errors/type-mismatch';
 
 /**
  * A Contract is an identity function that does some checks on the input and throws an error if the checks don't pass.
@@ -23,7 +23,7 @@ export type ContractType = 'string' | 'boolean' | 'object' | 'number' | 'undefin
  */
 export const contract = <T> (type: ContractType): Contract<T> => x => {
 	if (typeof x !== type) {
-		throw new ParmenidesSimpleError(type, x);
+		throw new TypeMismatch(type, x);
 	}
 	return x;
 };

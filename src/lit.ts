@@ -1,4 +1,4 @@
-import { ParmenidesSimpleError } from './errors/parmenides-simple.error';
+import { TypeMismatch } from './errors/type-mismatch';
 
 /**
  * @ignore
@@ -16,7 +16,7 @@ export type BasicType = string | number | boolean;
 export const lit = <T extends BasicType> (expectedValue: T) =>
 	(x: T) => {
 		if (x !== expectedValue) {
-			throw new ParmenidesSimpleError(`'${expectedValue}'`, x);
+			throw new TypeMismatch(`'${expectedValue}'`, x);
 		}
 		return x;
 	}

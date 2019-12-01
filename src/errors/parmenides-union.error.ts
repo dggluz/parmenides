@@ -1,5 +1,5 @@
 import { Contract } from '../contract';
-import { ParmenidesError } from './parmenides.error';
+import { ValidationError, isTypeError } from './parmenides.error';
 
 /**
  * Checks the received contracts one by time. It returns an array with the error messages
@@ -7,6 +7,7 @@ import { ParmenidesError } from './parmenides.error';
  * @param contracts the array of contracts to check against.
  * @param value the value to check the contracts with.
  */
+// TODO: remove this function and the contracts[]
 const getContractErrors = (contracts: Contract<any>[], value: any) =>
 	contracts.map(aContract => {
 		try {
@@ -18,20 +19,39 @@ const getContractErrors = (contracts: Contract<any>[], value: any) =>
 	})
 ;
 
+export const isUnionError = isTypeError<ParmenidesUnionError>('UnionError');
+
 /**
- * @class
  * Error thrown when a value is expected to comply with any of the supplied contracts but it doesn't.
  */
-export class ParmenidesUnionError extends ParmenidesError {
+// TODO: remove Parmenides prefix
+export class ParmenidesUnionError extends TypeError implements ValidationError {
+	name = "UnionError"
+	kind = 'ValidationError' as const;
+
 	/**
 	 * @constructor
-	 * @param contracts the contracts to check the value with. 
-	 * @param value the value that doesn't complain any of the contracts.
+	 * @param contracts the contracts to check the value with.
+	 * @param actualValue the value that doesn't complain any of the contracts.
 	 */
-	constructor (contracts: Contract<any>[], value: any) {
+	constructor (public contracts: Contract<any>[], public errors: ValidationError[], public actualValue: unknown) {
+		// TODO: add diferent tests and improve the error message
 		super(`Expected value to match to any of the contracts, but it didn't: ${
-			getContractErrors(contracts, value)
+			getContractErrors(contracts, actualValue)
 				.join('\n')
 		}`);
+	}
+
+	explain() {
+		return this.message
+	}
+
+	explainCause() {
+		return this.message
+	}
+	eq(error: ValidationError): boolean {
+		return isUnionError(error)
+			&& this.actualValue === error.actualValue;
+		// TODO: compare contracts?
 	}
 }

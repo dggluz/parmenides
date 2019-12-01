@@ -1,40 +1,56 @@
-/**
- * @abstract
- * @class
- * A generic error. All other errors will inherit from this one, hence it's easy to check if an error is a
- * ParmenidesError (its instanceof ParmenidesError or has the public property ParmenidesError = 'ParmenidesError').
- * It also has some generic error methods.
- */
-export abstract class ParmenidesError extends TypeError {
-	ParmenidesError = 'ParmenidesError';
+export interface ValidationError {
+	kind: 'ValidationError';
+	name: string;
 
 	/**
-	 * @constructor
-	 * @param message Message string
+	 * Explains the error as if it was called from a TOP level perspective
 	 */
-	constructor (message: string) {
-		super(message);
-	}
+	explain(): string;
 
 	/**
-	 * @returns the message, intended to be human readable by itself.
+	 * Explain the root cause of the error
 	 */
-	getMessage () {
-		return this.message;
-	}
+	explainCause(): string;
 
 	/**
-	 * @returns an error message chunk intended to be used into a larger error message.
+	 * Check if two ValidationError's are the same
+	 * @param error
 	 */
-	getGenericMessage () {
-		return this.getMessage();
-	}
-
-	/**
-	 * @returns the "navigation" to the error source (useful only for nested errors, where the navigation
-	 * is the path to the property or element that doesn't match the contract).
-	 */
-	getNavigation () {
-		return '';
-	}
+	eq(error: ValidationError): boolean;
+	// TODO: add message property?
 }
+
+export interface AccesableError {
+	/**
+	 * Returns a string representation of the path to where the original
+	 * error was originated from. For example "[0].id"
+	 * @param isTopLevelError Indicates if this is the top level error
+	 */
+	getAccesor(isTopLevelError: boolean): string;
+}
+
+export const isAccesableError = (error: any): error is AccesableError =>
+	typeof error === 'object' &&
+	'getAccesor' in error
+;
+
+export const getAccesor = (error: any, isTopLevelError: boolean) =>
+	isAccesableError(error)
+		? error.getAccesor(isTopLevelError)
+		: ''
+;
+
+export const isTypeError = <ErrorType>(type: string) =>
+	(error: any): error is ErrorType =>
+		typeof error === 'object' &&
+		'name' in error &&
+		// error.hasOwnProperty('type') &&
+		error.name === type
+;
+
+
+export const isValidationError = (error: any): error is ValidationError =>
+	typeof error === 'object' &&
+	error.hasOwnProperty('kind') &&
+	error.kind === 'ValidationError'
+;

@@ -1,4 +1,5 @@
-import { num, ParmenidesSimpleError } from '../src/parmenides';
+import { num, TypeMismatch } from '../src/parmenides';
+import './to-fail-with-contract-error';
 
 describe('`num` contract', () => {
 	it('`num(x)` returns `x` when it is a number', () => {
@@ -6,10 +7,11 @@ describe('`num` contract', () => {
 		expect(num(-5)).toBe(-5);
 	});
 
-	it('`num(x)` throws ParmenidesSimpleError if `x` is not a number', () => {
-		expect(() => num('foo' as any)).toThrowError(ParmenidesSimpleError);
-		expect(() => num({} as any)).toThrowError(ParmenidesSimpleError);
-		expect(() => num(false as any)).toThrowError(ParmenidesSimpleError);
-		expect(() => num(undefined as any)).toThrowError(ParmenidesSimpleError);
+	it('`num(x)` throws TypeMismatch if `x` is not a number', () => {
+		const obj = {};
+		expect(() => num('foo' as any)).toFailWithContractError(new TypeMismatch('number', 'foo'));
+		expect(() => num(obj as any)).toFailWithContractError(new TypeMismatch('number', obj));
+		expect(() => num(false as any)).toFailWithContractError(new TypeMismatch('number', false));
+		expect(() => num(undefined as any)).toFailWithContractError(new TypeMismatch('number', undefined));
 	});
 });
