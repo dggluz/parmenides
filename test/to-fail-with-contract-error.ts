@@ -1,23 +1,36 @@
 import { ValidationError, isValidationError } from "../src/parmenides";
+import {red, green} from 'chalk';
+
+const fail = (message: () => string) => (
+	{
+		pass: false,
+		message
+	}
+)
+
 
 expect.extend({
 	toFailWithContractError (fn: unknown, expected: ValidationError) {
 		let pass = false;
 		try {
-			if (typeof fn === 'function') {
-				fn();
-				return {
-					pass,
-					message: () => `The expected function needs to fail`
-				}
-			} else {
-				return {
-					pass,
-					message: () => `The expected value needs to be a function: ${fn}`
-				}
+
+
+			if (typeof fn !== 'function') {
+				// return {pass: true, message: () => ''};
+				return fail(
+					() => `WRONG USAGE: I was ${green('expecting a function to call')}, but I ${red('received the value')}: ${fn}`
+				)
 			}
+			const value = fn();
+			return fail(
+				() => `The function was ${green('expected to fail')}, but ${red('succeded with value')}: ${value}`
+			)
 		} catch (error) {
 			pass = isValidationError(error) && error.eq(expected);
+
+			// if (pass) {
+			// 	console.log(`${green('Expected message')}: ${expected}`)
+			// }
 			let message = pass
 				? () => 'toFailWithContractError negated message not implemented'
 				: () => {
@@ -32,7 +45,10 @@ expect.extend({
 						const expectedExplanation = expected.explain();
 
 						if (errorExplanation !== expectedExplanation) {
-							return `Actual error explanation: "${errorExplanation}"\nExpected error explanation: "${expectedExplanation}"`;
+							return [
+								`${red('Actual error explanation')}: "${errorExplanation}"`,
+								`${green('Expected error explanation')}: "${expectedExplanation}"`
+							].join('\n');
 						} else {
 							return `The errors are different but are explained the same: "${errorExplanation}"`;
 						}
