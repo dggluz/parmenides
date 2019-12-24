@@ -9,7 +9,7 @@ type Person = ContractOf<typeof personContract>;
 
 const p1: Person = {name: 'test', age: 1};
 
-// $ExpectType { name: string; age: number; }
+// $ExpectType ContractOfMap<{ name: Contract<string>; age: Contract<number>; }>
 p1;
 
 interface Person2 extends ContractOf<typeof personContract> {

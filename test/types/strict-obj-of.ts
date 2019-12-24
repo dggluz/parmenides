@@ -3,7 +3,7 @@ import { strictObjOf, str, num } from 'parmenides';
 // `strictObjOf` takes a map of contracts and returns a contract that validates the contract of each field.
 
 // Simple strictObjOf
-// $ExpectType { foo: string; bar: number; }
+// $ExpectType ContractOfMap<{ foo: Contract<string>; bar: Contract<number>; }>
 strictObjOf({
 	foo: str,
 	bar: num

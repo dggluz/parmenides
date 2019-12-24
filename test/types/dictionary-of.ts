@@ -8,5 +8,5 @@ const contacts = contactsContract({
 	jane: { name: 'jane', age: 27}
 });
 
-// $ExpectType Record<string, { name: string; age: number; }>
+// $ExpectType Record<string, ContractOfMap<{ name: Contract<string>; age: Contract<number>; }>>
 contacts;
