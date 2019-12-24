@@ -3,7 +3,7 @@ import { objOf, str, num } from 'parmenides';
 // `objOf` takes a map of contracts and returns a contract that validates the contract of each field.
 
 // Simple objOf
-// $ExpectType ContractOfMap<{ foo: Contract<string>; bar: Contract<number>; }>
+// $ExpectType { foo: string; bar: number; }
 objOf({
 	foo: str,
 	bar: num

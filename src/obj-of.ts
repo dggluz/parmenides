@@ -4,10 +4,20 @@ import { ParmenidesError } from './errors/parmenides.error';
 import { ParmenidesObjOfError } from './errors/parmenides-obj-of.error';
 
 /**
+ * Extracts the Contract for each property in a contract map. Should not be needed if we make the input any/unknown
  * @ignore
  */
 export type ContractOfMap<T extends MapOfContracts> = {
   [P in keyof T]: ContractOf<T[P]>;
+}
+
+/**
+ * Type function that generates a contract for the mapped contracts
+ */
+export type ContractMap <T extends MapOfContracts> = {
+  (x: ContractOfMap<T>): {
+    [P in keyof T]: ContractOf<T[P]>;
+  }
 }
 
 export type MapOfContracts = {
@@ -22,7 +32,7 @@ export type MapOfContracts = {
  * @param contractsMap An object whose values are Contracts
  * @returns Contract to an object which properties should comply with the corresponding Contracts.
  */
-export const objOf = <T extends MapOfContracts> (contractsMap: T): Contract<ContractOfMap<T>> => {
+export const objOf = <T extends MapOfContracts> (contractsMap: T): ContractMap<T> => {
 	contractsMap = obj(contractsMap);
 
 	return (target: ContractOfMap<T>) => {
