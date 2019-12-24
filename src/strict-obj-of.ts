@@ -1,4 +1,4 @@
-import { objOf, MapOfContracts } from './obj-of';
+import { objOf, MapOfContracts, ContractObjOf } from './obj-of';
 import { Contract } from './contract';
 import { ParmenidesExtraPropertyError } from './errors/parmenides-extra-property.error';
 import { obj } from './obj';
@@ -10,7 +10,7 @@ import { obj } from './obj';
  * @param contractsMap
  * @param contract
  */
-const requireAll = <T extends object> (contractsMap: MapOfContracts<T>, contract: Contract<T>) => {
+const requireAll = <T extends MapOfContracts> (contractsMap: T, contract: Contract<ContractObjOf<T>>) => {
 	/**
 	 * @ignore
 	 * Internal use function. Check that all the elements of arrA are also elements of arrB.
@@ -27,7 +27,7 @@ const requireAll = <T extends object> (contractsMap: MapOfContracts<T>, contract
 			return anElement;
 		});
 
-	return (target: T) => {
+	return (target: ContractObjOf<T>) => {
 		const targetKeys = Object.keys(obj(target));
 		checkAllIncluded(targetKeys, Object.keys(contractsMap));
 		return contract(target);
@@ -40,6 +40,6 @@ const requireAll = <T extends object> (contractsMap: MapOfContracts<T>, contract
  * @returns Contract that validates an object's properties against each corresponding Contract and also
  * checks that there are not extra properties.
  */
-export const strictObjOf = <T extends object> (contractMap: MapOfContracts<T>): Contract<T> =>
+export const strictObjOf = <T extends MapOfContracts> (contractMap: T): Contract<ContractObjOf<T>>  =>
 	requireAll(contractMap, objOf(contractMap))
 ;

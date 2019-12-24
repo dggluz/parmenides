@@ -1,4 +1,5 @@
 import { ParmenidesSimpleError } from './errors/parmenides-simple.error';
+import { Contract } from './contract';
 
 /**
  * @ignore
@@ -13,7 +14,7 @@ export type BasicType = string | number | boolean;
  * @param expectedValue the expected literal value.
  * @returns a Contract to that literal value.
  */
-export const lit = <T extends BasicType> (expectedValue: T) =>
+export const lit = <T extends BasicType> (expectedValue: T): Contract<T> =>
 	(x: T) => {
 		if (x !== expectedValue) {
 			throw new ParmenidesSimpleError(`'${expectedValue}'`, x);
