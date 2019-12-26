@@ -1,4 +1,5 @@
 # Parmenides
+[![Build Status](https://travis-ci.org/dggluz/parmenides.svg?branch=master)](https://travis-ci.org/dggluz/parmenides)
 [![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors)
 
 > TypeScript library that performs dynamic type checking
