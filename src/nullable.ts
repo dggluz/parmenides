@@ -1,6 +1,4 @@
 import { Contract } from './contract';
-import { union } from './union';
-import { nil } from './nil';
 
 /**
  * Takes a contract and returns another contract to `null` or the first contract's values.
@@ -9,4 +7,9 @@ import { nil } from './nil';
  * @param contract
  * @returns Contract to `null` or first contract's values.
  */
-export const nullable = <T> (contract: Contract<T>) => union(contract, nil);
+export const nullable = <T> (contract: Contract<T>): Contract<T | null> => (x: any) => {
+	if (x === null) {
+		return x;
+	}
+	return contract(x);
+}

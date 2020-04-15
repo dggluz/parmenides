@@ -1,4 +1,4 @@
-import { str, num, objOf, ParmenidesError } from '../src/parmenides';
+import { str, num, objOf, ParmenidesError, ParmenidesSimpleError } from '../src/parmenides';
 
 describe('`objOf` contract', () => {
 	const objContract = objOf({
@@ -138,4 +138,12 @@ describe('`objOf` contract', () => {
 			} as any)
 		).toThrowError(SyntaxError);
 	});
+
+  it('`objOf(ContractMap)(null) should throw', () => {
+      const contract = objOf({
+        foo: str
+      });
+
+      expect(() => contract(null)).toThrowError(ParmenidesSimpleError)
+  })
 });

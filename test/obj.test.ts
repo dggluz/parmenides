@@ -14,4 +14,8 @@ describe('`obj` contract', () => {
 		expect(() => obj(false as any)).toThrowError(ParmenidesSimpleError);
 		expect(() => obj(undefined as any)).toThrowError(ParmenidesSimpleError);
 	});
+
+  it('`obj(null) should throw', () => {
+		expect(() => obj(null)).toThrowError(ParmenidesSimpleError);
+  })
 });
