@@ -1,4 +1,5 @@
-import { contract } from './contract';
+import { contract, Contract } from './contract';
+import { ParmenidesSimpleError } from './parmenides';
 
 /**
  * Object Contract: identity function that throws an error if it is called with something but an object.
@@ -7,4 +8,9 @@ import { contract } from './contract';
  * @param x an object
  * @returns x.
  */
-export const obj = contract('object') as <T extends object> (x: T) => T;
+export const obj = <T> (x: T) => {
+	if (typeof x !== 'object' || x == null) {
+		throw new ParmenidesSimpleError('object', x);
+	}
+	return x;
+};
