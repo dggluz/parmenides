@@ -1,4 +1,4 @@
-import { nullable, str, num } from '../src/parmenides';
+import { nullable, str, num, objOf } from '../src/parmenides';
 
 describe('`nullable` contract builder', () => {
 	it('`nullable(contract)(x)` returns `null` when it is null', () => {
@@ -18,4 +18,16 @@ describe('`nullable` contract builder', () => {
 		expect(() => nullable(num)({} as any)).toThrowError(TypeError);
 		expect(() => nullable(num)(false as any)).toThrowError(TypeError);
   });
+
+  describe('nullable(objOf)', () => {
+    const contract = nullable(objOf({
+      foo: str
+    }));
+    it('not null', () => {
+      expect(contract({foo: 'foo'})).toEqual({foo: 'foo'});
+    })
+    it('null value', () => {
+      expect(contract(null)).toBe(null);
+    })
+  })
 });
