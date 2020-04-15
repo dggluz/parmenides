@@ -372,6 +372,12 @@ const contacts = contactsContract({
 
 ```
 
+## Publish
+
+This library is published through TravisCI when merged to master, the version number is calculated automatically by semantic release.
+
+Just create PR's to the development branch, and once that get's merged to master the release process will do it's magic.
+
 ## Credits
 
 Made from the [`tsall/typescript-library-starter`](https://github.com/tsall/typescript-library-starter).
