@@ -376,7 +376,11 @@ const contacts = contactsContract({
 
 This library is published through TravisCI when merged to master, the version number is calculated automatically by semantic release.
 
-Just create PR's to the development branch, and once that get's merged to master the release process will do it's magic.
+It is important for the calculation of the release number that the previous npm release is found in the master branch and that the PR are merged without squashing.
+
+The normal flow of development should be to create PR's against the development branch, merge them using the merge commit option. Then, once all the needed features/fixes are merged, we can create a PM from development to master that should be merged with fast-forward.
+We still need to configure github to disallow other type of merges and ease the release cycle.
+
 
 ## Credits
 
